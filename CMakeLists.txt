@@ -4,4 +4,5 @@ project(CppGameEngine)
 set(CMAKE_CXX_STANDARD 20)
 
 add_executable(CppGameEngine main.cpp
-        MyGameEngine.h)
+        MyGameEngine.h
+        FreeSquare.h)
