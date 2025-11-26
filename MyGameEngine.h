@@ -4,6 +4,9 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include "KeyManager.h"
+
+class  Screen;
 
 class GameInfo{
 public:
@@ -44,9 +47,10 @@ public:
     int centre;
     int width;
     int height;
-    char texture;
+    std::string* texture;
     Position position = Position(0, 0);
     int pixelCount;
+    Screen* screen;
     int screenWidth;
     int screenHeight;
 
@@ -54,14 +58,13 @@ public:
         centre = -1;
         width = -1;
         height = -1;
-        texture = ' ';
+        texture = new std::string(" ");
         pixelCount = -1;
     }
 
 
-    GameObject(int centre, int width, int height, char texture, Position position)
-    : centre(centre),
-      width(width),
+    GameObject(int width, int height, std::string* texture, Position position)
+    : width(width),
       height(height),
       texture(texture),
       position(position)
@@ -104,10 +107,15 @@ public:
         int count = 0;
         int count2 = 0;
         for (int i = position2index(obj->position , width); i < pixelCount; i++) {
+
             if(count2 == obj->pixelCount) break;
             count++ ;
             count2++ ;
-            mainScreen[i] = obj->texture;
+
+            if(i > -1 && i < pixelCount){
+                mainScreen[i] = obj->texture->at(count2 - 1);
+            }
+
             if(count == obj->width) {
                 count = 0;
                 i -= obj->width;
@@ -118,6 +126,7 @@ public:
 
     void addObj(GameObject* obj, int order){
         this->objects.push_back(obj);
+        obj->screen = this;
         obj->screenHeight = this->height;
         obj->screenWidth = this->width;
         obj->pixelCount = obj->width * obj->height;

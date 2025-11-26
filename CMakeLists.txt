@@ -5,4 +5,6 @@ set(CMAKE_CXX_STANDARD 20)
 
 add_executable(CppGameEngine main.cpp
         MyGameEngine.h
-        FreeSquare.h)
+        FreeSquare.h
+        KeyManager.h
+        Ballet.h)
