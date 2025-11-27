@@ -7,8 +7,9 @@ public:
             " **** "
             "******"
             "******";
+    Texture t = Texture(texture);
 
-    FreeSquare() : GameObject(6 ,4 ,&texture,Position(4,4)){
+    FreeSquare() : GameObject(6 ,4 ,&t,Position(4,4)){
     }
     void update() override{
         if(getKeyState(KeyCode::RIGHT)){

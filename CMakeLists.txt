@@ -7,4 +7,5 @@ add_executable(CppGameEngine main.cpp
         MyGameEngine.h
         FreeSquare.h
         KeyManager.h
-        Ballet.h)
+        Ballet.h
+        TestObject.h)

@@ -33,13 +33,15 @@ public:
     }
 };
 
-class Shape {
+class Texture {
 public:
     int width, height;
-    char* shapeData;
-    Shape(std::string str) {
-
+    std::string string;
+    Texture(std::string strTexture) {
+        string = strTexture;
     }
+
+
 };
 
 class GameObject {
@@ -47,7 +49,7 @@ public:
     int centre;
     int width;
     int height;
-    std::string* texture;
+    Texture* texture;
     Position position = Position(0, 0);
     int pixelCount;
     Screen* screen;
@@ -58,12 +60,12 @@ public:
         centre = -1;
         width = -1;
         height = -1;
-        texture = new std::string(" ");
+        texture = new Texture(" ");
         pixelCount = -1;
     }
 
 
-    GameObject(int width, int height, std::string* texture, Position position)
+    GameObject(int width, int height, Texture* texture, Position position)
     : width(width),
       height(height),
       texture(texture),
@@ -89,6 +91,7 @@ public:
     int pixelCount;
     char* mainScreen;
     std::vector<GameObject*> objects;
+    std::vector<GameObject*> preJoinedObjects;
 
     Screen(char voidBackGroundTexture, int w, int h) {
         this->voidBackGroundTexture = voidBackGroundTexture;
@@ -113,7 +116,7 @@ public:
             count2++ ;
 
             if(i > -1 && i < pixelCount){
-                mainScreen[i] = obj->texture->at(count2 - 1);
+                mainScreen[i] = obj->texture->string.at(count2 - 1);
             }
 
             if(count == obj->width) {
@@ -125,7 +128,7 @@ public:
     }
 
     void addObj(GameObject* obj, int order){
-        this->objects.push_back(obj);
+        this->preJoinedObjects.push_back(obj);
         obj->screen = this;
         obj->screenHeight = this->height;
         obj->screenWidth = this->width;
@@ -149,6 +152,10 @@ public:
             obj->update();
             writeObj(obj);
         }
+        for(GameObject* obj : preJoinedObjects){
+            objects.push_back(obj);
+        }
+        preJoinedObjects.clear();
     }
 };
 
